@@ -239,7 +239,7 @@ class StaticArrayIterator<T> implements LookAheadIterator<T> {
   next(value?: any): IteratorResult<T> {
     const i = this.index++;
     const array = this.array;
-    return i < this.length ? { value: array[i], done: false } : { done: true };
+    return i < this.length ? { value: array[i], done: false } : { done: true, value: null };
   }
 
   hasValue() {
@@ -277,7 +277,7 @@ class ZipBufferIterator<T, R> extends OuterSubscriber<T, R> implements LookAhead
   next(): IteratorResult<T> {
     const buffer = this.buffer;
     if (buffer.length === 0 && this.isComplete) {
-      return { done: true };
+      return { done: true, value: null };
     } else {
       return { value: buffer.shift(), done: false };
     }

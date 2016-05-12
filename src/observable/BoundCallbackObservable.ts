@@ -55,9 +55,9 @@ export class BoundCallbackObservable<T> extends Observable<T> {
     };
   }
 
-  constructor(private callbackFunc: Function,
-              private selector: Function,
-              private args: any[],
+  constructor(public callbackFunc: Function,
+              public selector: Function,
+              public args: any[],
               public scheduler: Scheduler) {
     super();
   }
