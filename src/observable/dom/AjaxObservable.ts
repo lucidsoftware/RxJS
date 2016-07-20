@@ -254,7 +254,6 @@ export class AjaxSubscriber<T> extends Subscriber<Event> {
         return null;
       }
     }
-
     return xhr;
   }
 
