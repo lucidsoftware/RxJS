@@ -254,7 +254,6 @@ export class AjaxSubscriber<T> extends Subscriber<Event> {
         xhr.send();
       }
     }
-
     return xhr;
   }
 
