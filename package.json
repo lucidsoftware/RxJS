@@ -193,7 +193,8 @@
     "watch": "^0.18.0",
     "watchify": "3.7.0",
     "webpack": "^1.13.1",
-    "xmlhttprequest": "1.8.0"
+    "xmlhttprequest": "1.8.0",
+    "npm-run-all":"3.0.0"
   },
   "engines": {
     "npm": ">=2.0.0"
