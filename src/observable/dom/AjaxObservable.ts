@@ -292,13 +292,14 @@ export class AjaxSubscriber<T> extends Subscriber<Event> {
   private setupEvents(xhr: XMLHttpRequest, request: AjaxRequest) {
     const progressSubscriber = request.progressSubscriber;
 
-    xhr.ontimeout = function xhrTimeout(e) {
+    function xhrTimeout(this: XMLHttpRequest, e: ProgressEvent) {
       const {subscriber, progressSubscriber, request } = (<any>xhrTimeout);
       if (progressSubscriber) {
         progressSubscriber.error(e);
       }
       subscriber.error(new AjaxTimeoutError(this, request)); //TODO: Make betterer.
     };
+    xhr.ontimeout = xhrTimeout;
     (<any>xhr.ontimeout).request = request;
     (<any>xhr.ontimeout).subscriber = this;
     (<any>xhr.ontimeout).progressSubscriber = progressSubscriber;
@@ -311,14 +312,15 @@ export class AjaxSubscriber<T> extends Subscriber<Event> {
         };
         (<any>xhr.onprogress).progressSubscriber = progressSubscriber;
       }
-
-      xhr.onerror = function xhrError(e) {
+      let xhrError: (e: ErrorEvent) => void;
+      xhrError = function(this: XMLHttpRequest, e: ErrorEvent) {
         const { progressSubscriber, subscriber, request } = (<any>xhrError);
         if (progressSubscriber) {
           progressSubscriber.error(e);
         }
         subscriber.error(new AjaxError('ajax error', this, request));
       };
+      xhr.onerror = xhrError;
       (<any>xhr.onerror).request = request;
       (<any>xhr.onerror).subscriber = this;
       (<any>xhr.onerror).progressSubscriber = progressSubscriber;
